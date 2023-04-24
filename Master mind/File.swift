@@ -25,9 +25,9 @@ class fileUpdater {
         self.filePath = filePath
         
         if fileManager.fileExists(atPath: filePath) {
-            var nuevosDatos = readScores(filePath: filePath)
+            var nuevosDatos = readScores(/*filePath: filePath*/)
             datos = nuevosDatos == [] ? datos : nuevosDatos
-            print("Datos \(datos)")
+//            print("Datos \(datos)")
         } else {
             writeFile(scores: datos)
         }
@@ -41,15 +41,15 @@ class fileUpdater {
         }
     }
     
-    func readScores(filePath: String) -> [Person]{
+    func readScores(/*filePath: String*/) -> [Person]{
         var people: [Person] = []
         do {
-            let fileData = try Data(contentsOf: URL(fileURLWithPath:filePath))
+            let fileData = try Data(contentsOf: URL(fileURLWithPath: self.filePath))
             let decoder = JSONDecoder()
             let json = try? decoder.decode([Person].self, from: fileData)
             if let json = json {
                 people = json
-                print("JSON \(people)")
+//                print("JSON \(people)")
                 return people
             }
             return people

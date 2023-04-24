@@ -17,6 +17,7 @@ class JuegoController: UIViewController {
     
     var ColorSeleccionado = "No_selecionado"
     var valorColor = 0
+    var puntuacion = 5000
     var numerosAla = [Int]()
     
     var Nivel:[UIButton]!
@@ -80,6 +81,7 @@ class JuegoController: UIViewController {
         //Do any additional setup after loading the view.
         Nivel = btns1
         numerosAla = generarnumeroColor()
+        print("ALA \(numerosAla)")
         print("Numeros meta: ")
         print(numerosAla)
         

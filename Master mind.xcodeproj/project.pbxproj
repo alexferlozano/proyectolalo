@@ -33,6 +33,7 @@
 		58F1E78629E4C0DA0041BDDF /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F1E78529E4C0DA0041BDDF /* MenuController.swift */; };
 		E006E39029F7168200403E0A /* Burbuja.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E006E38F29F7168200403E0A /* Burbuja.mp3 */; };
 		E006E39229F72E3A00403E0A /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E006E39129F72E3A00403E0A /* File.swift */; };
+		E006E39429F7418500403E0A /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E006E39329F7418500403E0A /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		58F1E78529E4C0DA0041BDDF /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		E006E38F29F7168200403E0A /* Burbuja.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Burbuja.mp3; sourceTree = SOURCE_ROOT; };
 		E006E39129F72E3A00403E0A /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		E006E39329F7418500403E0A /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				58F1E77329E499770041BDDF /* LaunchScreen.storyboard */,
 				58F1E77629E499770041BDDF /* Info.plist */,
 				E006E39129F72E3A00403E0A /* File.swift */,
+				E006E39329F7418500403E0A /* CustomTableViewCell.swift */,
 			);
 			path = "Master mind";
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 			files = (
 				58D8B12629ED952D00B7A8DD /* JuegoController.swift in Sources */,
 				58F1E78629E4C0DA0041BDDF /* MenuController.swift in Sources */,
+				E006E39429F7418500403E0A /* CustomTableViewCell.swift in Sources */,
 				E006E39229F72E3A00403E0A /* File.swift in Sources */,
 				58D8B12929ED956100B7A8DD /* RecordsController.swift in Sources */,
 				58F1E76D29E4993F0041BDDF /* ViewController.swift in Sources */,
