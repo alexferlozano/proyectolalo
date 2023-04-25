@@ -11,16 +11,25 @@ import AVFoundation
 
 class JuegoController: UIViewController {
     
+    @IBOutlet weak var lblScore: UILabel!
+    @IBOutlet weak var lblTime: UILabel!
     var audioPlayer: AVAudioPlayer?
 
     var numeros = [Int]()
-    
+    var personas = fileUpdater().readScores()
     var ColorSeleccionado = "No_selecionado"
     var valorColor = 0
     var puntuacion = 5000
+    var resta = 10
+    var minutos = 0
+    var segundos = 0
+    var bandera = 0
+    var index = -1
+    
     var numerosAla = [Int]()
     
     var Nivel:[UIButton]!
+    var timer: Timer!
        
     @IBOutlet var btns1: [UIButton]!
     @IBOutlet weak var Bien1: UILabel!
@@ -72,19 +81,22 @@ class JuegoController: UIViewController {
     
     @IBOutlet weak var btnRegresar: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let minScore = personas.min(by: { $0.score < $1.score}){
+            bandera = minScore.score
+            self.index = personas.firstIndex(where: { $0.score == minScore.score })!
+
+        } else {
+            print("El arreglo está vacío")
+        }
         musicaInicio()
-        
         //Do any additional setup after loading the view.
         Nivel = btns1
         numerosAla = generarnumeroColor()
         print("ALA \(numerosAla)")
         print("Numeros meta: ")
         print(numerosAla)
-        
         habilitarTablero(false, tablero: btns2)
         habilitarTablero(false, tablero: btns3)
         habilitarTablero(false, tablero: btns4)
@@ -95,10 +107,26 @@ class JuegoController: UIViewController {
         habilitarTablero(false, tablero: btns9)
         habilitarTablero(false, tablero: btns10)
         habilitarTablero(false, tablero: btnsMeta)
-        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeScore), userInfo: nil, repeats: true)
         
     }
     
+    @objc func updateTimeScore(){
+        if puntuacion == 100 {
+            puntuacion = 100
+        } else {
+            puntuacion -= resta
+        }
+        segundos += 1
+        if segundos > 59 {
+            minutos += 1
+            segundos = 0
+        }
+        
+        lblScore.text = "Tiempo: \(minutos):\(segundos)"
+        lblTime.text = "Puntuacion \(puntuacion)"
+//        print("Tiempo: \(minutos):\(segundos)")
+    }
     
     @IBAction func RegresarView(_ sender: Any) {
         guard let audioPath = Bundle.main.path(forResource: "Burbuja", ofType: "mp3") else { return }
@@ -112,6 +140,7 @@ class JuegoController: UIViewController {
         
         audioPlayer?.play()
         
+        timer.invalidate()
         dismiss(animated: true, completion: nil)
     }
     
@@ -248,12 +277,31 @@ class JuegoController: UIViewController {
         if Coinciden == 4{
             sonidoGanar()
             mostrarMeta()
-            let alerta = UIAlertController(title: "Felicidades Compadre!!", message: "Ganaste Wow eso si que es impresionante :)", preferredStyle: .alert)
+            timer.invalidate()
+            if puntuacion > bandera{
+                let alerta = UIAlertController(title: "Felicidades Compadre!!", message: "Superaste un record, introduce tu nombre para celebrar :)", preferredStyle: .alert)
+                alerta.addTextField{ textField in
+                    textField.placeholder = "Nombre"
+                }
+                let okAction = UIAlertAction(title: "Agregar", style: .default) { _ in
+                    let text = alerta.textFields?.first?.text
+                    var persona = Person(name: text ?? "Default", score: self.puntuacion)
+                    self.personas.remove(at: self.index)
+                    self.personas.append(persona)
+                    fileUpdater().updateFile(scores: self.personas)
+                    
+                    self.dismiss(animated: true, completion: nil)
+                }
+                alerta.addAction(okAction)
+                self.present(alerta, animated: true, completion: nil)
+            } else {
+                let alerta = UIAlertController(title: "Felicidades Compadre!!", message: "Ganaste Wow eso si que es impresionante :)", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default) { _ in
                     self.dismiss(animated: true, completion: nil)
                 }
                 alerta.addAction(okAction)
                 self.present(alerta, animated: true, completion: nil)
+            }
             
         }else{
             MostrarDatosTabla(Coinciden, No_Coinciden)
